@@ -20,6 +20,7 @@ the plugin is initialized to change which segments are shown:
 ```bash
 set -g @minimal_theme_hostname_status "on"
 set -g @minimal_theme_directory_status "off"
+set -g @minimal_theme_cpu_status "off"
 set -g @minimal_theme_memory_status "off"
 set -g @minimal_theme_date_status "off"
 set -g @minimal_theme_clock_status "off"
@@ -47,6 +48,9 @@ set -g @minimal_theme_session_icon " "
 # Directory icon  
 set -g @minimal_theme_dir_icon " "
 
+# CPU icon
+set -g @minimal_theme_cpu_icon " "
+
 # Memory icon
 set -g @minimal_theme_memory_icon " "
 
@@ -55,6 +59,9 @@ set -g @minimal_theme_clock_icon " "
 
 # Battery icon
 set -g @minimal_theme_battery_icon " "
+
+# Maximized/zoomed window indicator
+set -g @minimal_theme_zoomed_icon "+"
 ```
 
 ### Window Status Customization

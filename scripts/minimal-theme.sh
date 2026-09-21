@@ -31,10 +31,13 @@ apply_minimal_theme() {
     # Get status bar fields configuration
     local toggle_status_key=$(get_tmux_option "@minimal_theme_toggle_status_key" "b")
     local session_icon=$(get_tmux_option "@minimal_theme_session_icon" "")
+    local zoomed_icon=$(get_tmux_option "@minimal_theme_zoomed_icon" "+")
     local hostname_status=$(get_tmux_option "@minimal_theme_hostname_status" "off")
     local hostname_icon=$(get_tmux_option "@minimal_theme_hostname_icon" "" )
     local directory_status=$(get_tmux_option "@minimal_theme_directory_status" "on")
     local dir_icon=$(get_tmux_option "@minimal_theme_dir_icon" "")
+    local cpu_status=$(get_tmux_option "@minimal_theme_cpu_status" "on")
+    local cpu_icon=$(get_tmux_option "@minimal_theme_cpu_icon" "")
     local memory_status=$(get_tmux_option "@minimal_theme_memory_status" "on")
     local memory_icon=$(get_tmux_option "@minimal_theme_memory_icon" "")
     local date_status=$(get_tmux_option "@minimal_theme_date_status" "on")
@@ -67,8 +70,9 @@ apply_minimal_theme() {
     tmux bind-key "$toggle_status_key" set-option status
 
     # Window status format
-    tmux set-option -g window-status-format "#[fg=$inactive_color,bg=$bg_color] #I:#W "
-    tmux set-option -g window-status-current-format "#[fg=$active_color,bg=$bg_color,bold] #I:#W "
+    local zoomed_indicator="#{?window_zoomed_flag, $zoomed_icon,}"
+    tmux set-option -g window-status-format "#[fg=$inactive_color,bg=$bg_color] #I:#W$zoomed_indicator "
+    tmux set-option -g window-status-current-format "#[fg=$active_color,bg=$bg_color,bold] #I:#W$zoomed_indicator "
     tmux set-option -g window-status-separator ""
 
     # Status left (session name)
@@ -84,8 +88,10 @@ apply_minimal_theme() {
         status_right_segments+=("#[fg=$accent_color]$hostname_icon #[fg=$text_color]#h")
     option_enabled "$directory_status" &&
         status_right_segments+=("#[fg=$accent_color]$dir_icon #[fg=$text_color]#([ #{pane_current_path} = \$HOME ] && echo '~' || basename #{pane_current_path})")
+    option_enabled "$cpu_status" &&
+        status_right_segments+=("#[fg=$accent_color]$cpu_icon #[fg=$text_color]#($CURRENT_DIR/scripts/cpu.sh)")
     option_enabled "$memory_status" &&
-        status_right_segments+=("#[fg=$accent_color]$memory_icon #[fg=$text_color]#(free | awk '/^Mem/ { printf(\"%.0f%%\", \$3/\$2 * 100 - 0.5) }' )")
+        status_right_segments+=("#[fg=$accent_color]$memory_icon #[fg=$text_color]#(free | awk '/^Mem/ { printf(\"%3.0f%%\", \$3/\$2 * 100 - 0.5) }' )")
     option_enabled "$date_status" &&
         status_right_segments+=("#[fg=$accent_color]$date_icon #[fg=$text_color]#(date '+%b %d')")
     option_enabled "$clock_status" &&

@@ -105,8 +105,10 @@ colorscheme switch, re-apply the overrides after switching schemes.
 The status bar displays the following information:
 
 - **Left**: Session name with icon
-- **Right**: Current directory, memory usage, date, time, battery percentage,
-  and an optional hostname
+- **Window list**: Window index/name, plus a `+` indicator when a window is
+  maximized/zoomed
+- **Right**: Current directory, CPU usage, memory usage, date, time, battery
+  percentage, and an optional hostname
 
 The hostname is disabled by default; all other `status-right` fields are
 enabled. Set these options before the plugin is initialized to change which
@@ -115,6 +117,7 @@ fields are shown:
 ```bash
 set -g @minimal_theme_hostname_status "on"
 set -g @minimal_theme_directory_status "off"
+set -g @minimal_theme_cpu_status "off"
 set -g @minimal_theme_memory_status "off"
 set -g @minimal_theme_date_status "off"
 set -g @minimal_theme_clock_status "off"
@@ -186,6 +189,7 @@ tmux source-file ~/.tmux.conf
 
 The theme requires some system commands to display information:
 
+- **CPU**: `/proc/stat` (Linux systems)
 - **Memory**: `free` command (install `procps` on some systems)
 - **Battery**: `/sys/class/power_supply/` directory (Linux systems)
 
