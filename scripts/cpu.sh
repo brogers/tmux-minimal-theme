@@ -1,8 +1,21 @@
 #!/usr/bin/env sh
-# Prints CPU usage from two short /proc/stat samples.
+# Prints CPU usage from two short samples (top on macOS, /proc/stat on Linux).
+
+if [ "$(uname)" = Darwin ]; then
+  # First top sample is since boot; the last one covers the short interval.
+  top -l 2 -n 0 -s 0 | awk '/^CPU usage/ { idle = $7 } END {
+        if (idle == "") {
+            print "N/A"
+            exit
+        }
+
+        printf "%3.0f%%", 100 - idle
+    }'
+  exit
+fi
 
 read_cpu() {
-    awk '/^cpu / {
+  awk '/^cpu / {
         idle = $5 + $6
         total = 0
         for (i = 2; i <= NF; i++) {

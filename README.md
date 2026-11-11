@@ -36,6 +36,7 @@
 
 ### Prerequisites
 
+- Linux or macOS
 - [tmux](https://github.com/tmux/tmux) (version 2.1 or higher)
 - [TPM (Tmux Plugin Manager)](https://github.com/tmux-plugins/tpm)
 
@@ -189,9 +190,9 @@ tmux source-file ~/.tmux.conf
 
 The theme requires some system commands to display information:
 
-- **CPU**: `/proc/stat` (Linux systems)
-- **Memory**: `free` command (install `procps` on some systems)
-- **Battery**: `/sys/class/power_supply/` directory (Linux systems)
+- **CPU**: `/proc/stat` on Linux; `top` on macOS
+- **Memory**: `free` on Linux (install `procps` on some systems); `memory_pressure` on macOS
+- **Battery**: `/sys/class/power_supply/` on Linux; `pmset` on macOS
 
 ### Colors not displaying correctly
 
