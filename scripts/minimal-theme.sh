@@ -91,7 +91,7 @@ apply_minimal_theme() {
     option_enabled "$cpu_status" &&
         status_right_segments+=("#[fg=$accent_color]$cpu_icon #[fg=$text_color]#($CURRENT_DIR/scripts/cpu.sh)")
     option_enabled "$memory_status" &&
-        status_right_segments+=("#[fg=$accent_color]$memory_icon #[fg=$text_color]#(free | awk '/^Mem/ { printf(\"%3.0f%%\", \$3/\$2 * 100 - 0.5) }' )")
+        status_right_segments+=("#[fg=$accent_color]$memory_icon #[fg=$text_color]#($CURRENT_DIR/scripts/memory.sh)")
     option_enabled "$date_status" &&
         status_right_segments+=("#[fg=$accent_color]$date_icon #[fg=$text_color]#(date '+%b %d')")
     option_enabled "$clock_status" &&
