@@ -191,7 +191,7 @@ tmux source-file ~/.tmux.conf
 The theme requires some system commands to display information:
 
 - **CPU**: `/proc/stat` on Linux; `top` on macOS
-- **Memory**: `free` on Linux (install `procps` on some systems); `memory_pressure` on macOS
+- **Memory**: `free` on Linux (install `procps` on some systems); `vm_stat` and `sysctl` on macOS
 - **Battery**: `/sys/class/power_supply/` on Linux; `pmset` on macOS
 
 ### Colors not displaying correctly

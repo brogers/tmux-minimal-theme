@@ -3,7 +3,7 @@
 
 if [ "$(uname)" = Darwin ]; then
   # First top sample is since boot; the last one covers the short interval.
-  top -l 2 -n 0 -s 0 | awk '/^CPU usage/ { idle = $7 } END {
+  top -l 2 -n 0 -s 1 | awk '/^CPU usage/ { idle = $7 } END {
         if (idle == "") {
             print "N/A"
             exit
